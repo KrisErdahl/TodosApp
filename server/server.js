@@ -21,10 +21,12 @@ app.post('/todos', (req, res) => {
 		})
 		.catch(err => {
 			res.status(400).send(err);
-			process.exit(1);
+			// process.exit(1);
 		});
 });
 
 app.listen(3500, () => {
 	console.log('started on port 3500');
 });
+
+module.exports = { app };
