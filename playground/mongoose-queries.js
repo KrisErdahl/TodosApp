@@ -11,7 +11,7 @@ User.findById(id)
 		if (!user) {
 			return console.log('User not found');
 		}
-		console.log('User', user);
+		console.log(JSON.stringify(user, undefined, 2));
 	})
 	.catch(e => console.log(e));
 
