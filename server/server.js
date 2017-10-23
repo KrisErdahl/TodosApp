@@ -1,3 +1,12 @@
+require('./config/config');
+
+// function connectDatabase(databaseUri){
+//     var promise = mongoose.connect('mongodb://localhost/myapp', {
+//         useMongoClient: true,
+//     });
+//     return promise;
+// }
+
 const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -9,7 +18,7 @@ const { User } = require('./models/user');
 
 const app = express();
 
-const port = process.env.PORT || 3500;
+const port = process.env.PORT;
 
 app.use(bodyParser.json());
 
