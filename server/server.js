@@ -42,7 +42,7 @@ app.get('/todos', (req, res) => {
 // 	res.send(req.params);
 // });
 
-// GET / user / id;
+// GET / todos / id;
 app.get('/todos/:id', (req, res) => {
 	// const id = '59ebd8ec8b6ddf4e177671fd';
 	let id = req.params.id;
@@ -56,6 +56,24 @@ app.get('/todos/:id', (req, res) => {
 			} else {
 				return res.send({ todo });
 			}
+		})
+		.catch(err => {
+			res.status(400).send();
+		});
+});
+
+//DELETE /todos/id
+app.delete('/todos/:id', (req, res) => {
+	let id = req.params.id;
+	if (!ObjectID.isValid(id)) {
+		return res.status(404).send();
+	}
+	Todo.findByIdAndRemove(id)
+		.then(todo => {
+			if (!todo) {
+				return res.status(404).send();
+			}
+			res.send({ todo });
 		})
 		.catch(err => {
 			res.status(400).send();
