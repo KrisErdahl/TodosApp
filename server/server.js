@@ -1,12 +1,5 @@
 require('./config/config');
 
-// function connectDatabase(databaseUri){
-//     var promise = mongoose.connect('mongodb://localhost/myapp', {
-//         useMongoClient: true,
-//     });
-//     return promise;
-// }
-
 const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -127,6 +120,28 @@ app.patch('/todos/:id', (req, res) => {
 		})
 		.catch(err => {
 			res.status(400).send();
+		});
+});
+
+//USER SECTION
+//POST /users  to add a new user
+app.post('/users', (req, res) => {
+	//lodash option _.pick
+	var body = _.pick(req.body, ['email', 'password']);
+	//body already defined, so no need to separate to email and password keys
+	var user = new User({ body });
+
+	user
+		.save()
+		.then(() => {
+			return user.generateAuthToken();
+		})
+		.then(token => {
+			res.header('x-auth', token).send(user);
+		})
+		.catch(err => {
+			res.status(400).send(err);
+			// process.exit(1);
 		});
 });
 
