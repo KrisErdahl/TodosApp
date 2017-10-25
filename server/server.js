@@ -129,7 +129,7 @@ app.post('/users', (req, res) => {
 	//lodash option _.pick
 	var body = _.pick(req.body, ['email', 'password']);
 	//body already defined, so no need to separate to email and password keys
-	var user = new User({ body });
+	var user = new User(body);
 
 	user
 		.save()

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 //for custom email validator
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
+const _ = require('lodash');
 
 var UserSchema = new mongoose.Schema({
 	email: {
@@ -37,6 +38,15 @@ var UserSchema = new mongoose.Schema({
 		}
 	]
 });
+
+// override method, to handle hiding the non email and id keys from the client
+UserSchema.methods.toJSON = function() {
+	const user = this;
+	// mongoose variable converted to a regular object where only the properties available on the document exist
+	const userObject = user.toObject();
+	//need to load lodash to use _pick
+	return _.pick(userObject, ['_id', 'email']);
+};
 
 // use old function style because need to bind this. Arrow functions will not bind this keyword.
 UserSchema.methods.generateAuthToken = function() {
