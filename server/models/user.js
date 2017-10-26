@@ -60,8 +60,28 @@ UserSchema.methods.generateAuthToken = function() {
 		token: token
 	});
 
+	// instance methods are called with lowercase, individual document
 	return user.save().then(() => {
 		return token;
+	});
+};
+
+UserSchema.statics.findByToken = function(token) {
+	//model methods are called with an uppercase, the model
+	const User = this;
+	let decoded;
+	//try/catch block. Any errors caught in try sends to catch error block, then continues on with function unless returned
+	try {
+		decoded = jwt.verify(token, 'abc123');
+	} catch (e) {
+		return Promise.reject();
+	}
+
+	return User.findOne({
+		_id: decoded._id,
+		// query nested by wrapping in quotes
+		'tokens.token': token,
+		'tokens.access': 'auth'
 	});
 };
 

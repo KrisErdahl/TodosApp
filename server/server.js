@@ -8,6 +8,7 @@ const { ObjectID } = require('mongodb');
 let { mongoose } = require('./db/mongoose');
 const { Todo } = require('./models/todo');
 const { User } = require('./models/user');
+const { authenticate } = require('./middleware/authenticate');
 
 const app = express();
 
@@ -143,6 +144,11 @@ app.post('/users', (req, res) => {
 			res.status(400).send(err);
 			// process.exit(1);
 		});
+});
+
+// private route calling to authenticate middleware for GETting a user
+app.get('/users/me', authenticate, (req, res) => {
+	res.send(req.user);
 });
 
 app.listen(port, () => {
