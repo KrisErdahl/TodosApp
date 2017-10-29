@@ -152,7 +152,7 @@ app.get('/users/me', authenticate, (req, res) => {
 });
 
 //login an existing user
-//POST /users/login {email, password}
+//POST /users/login
 app.post('/users/login', (req, res) => {
 	//lodash option _.pick
 	const body = _.pick(req.body, ['email', 'password']);
