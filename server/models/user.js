@@ -65,6 +65,19 @@ UserSchema.methods.generateAuthToken = function() {
 	});
 };
 
+//instance method to remove a token from a logged in user
+UserSchema.methods.removeToken = function(token) {
+	const user = this;
+
+	return user.update({
+		$pull: {
+			tokens: {
+				token: token
+			}
+		}
+	});
+};
+
 UserSchema.statics.findByToken = function(token) {
 	//model methods are called with an uppercase, the model
 	const User = this;
