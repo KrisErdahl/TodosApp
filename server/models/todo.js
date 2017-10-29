@@ -16,22 +16,12 @@ const Todo = mongoose.model('Todo', {
 	completedAt: {
 		type: Number,
 		default: null
+	},
+	// _ used to show it is an object id
+	_creator: {
+		type: mongoose.Schema.Types.ObjectId,
+		required: true
 	}
 });
-
-// 	const newTodo = new Todo({
-// 		text: '   Sauna!   '
-// 	});
-//
-// 	newTodo
-// 		.save()
-// 		.then(doc => {
-// 			console.log(JSON.stringify(doc, undefined, 2));
-// 		})
-// 		.catch(err => {
-// 			console.error('Unable to save this todo', err.stack);
-// 			process.exit(1);
-// 		});
-// });
 
 module.exports = { Todo };
