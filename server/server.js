@@ -166,7 +166,7 @@ app.get('/users/me', authenticate, (req, res) => {
 //login an existing user
 //POST /users/login
 app.post('/users/login', (req, res) => {
-	//lodash option _.pick
+	//lodash option _.pick is available
 	const body = _.pick(req.body, ['email', 'password']);
 	User.findByCredentials(body.email, body.password)
 		.then(user => {
